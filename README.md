@@ -5,17 +5,25 @@ Predicting if a patient has a certain disease could be of great value. This pred
 
 This research project will provide a benchmark for comparing these databases. The benchmark will include a scalable data generator capable of producing probabilistic datasets. This research will solely focus on MayBMS. Other probabilistic databases are out of the scope of this project.
 
-## Technologies
-Project is created with:
-* Lorem version: 12.3
-* Ipsum version: 2.33
-* Ament library version: 999
+## Project structure
+    .
+    ├── bin			# Holds all executable files
+    ├── data                    # Data files (such as initial db dummy data)
+    ├── maybms_benchmark        # Project files
+    │   ├── benchmark           # Benchmark files
+    │   │   └── ...             # All files that are needed for the benchmark
+    │   ├── generator           # Data generator files
+    │   │   └── ...             # All files that are needed for the data generator
+    │   └── __main__.py         # Main executable project file
+    │   └── app.py              # Core project script
+    └── setup.py		# Initializes this project's package
 	
 ## Setup
-To run this project, install it locally using npm:
 
 ```
-$ cd ../lorem
-$ npm install
-$ npm start
+$ 
 ```
+
+## Usage
+
+...
