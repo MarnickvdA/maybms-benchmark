@@ -20,7 +20,7 @@ This research project will provide a benchmark for comparing these databases. Th
 	
 ## Setup
 
-This project uses PyCharm as the IDE and [https://www.anaconda.com/](Anaconda) for easy package management.
+This project uses PyCharm as the IDE and [Anaconda](https://www.anaconda.com/) for easy package management.
 
 Import this project into PyCharm and execute the following in the PyCharm terminal:
 
@@ -28,6 +28,8 @@ Import this project into PyCharm and execute the following in the PyCharm termin
 $ bash bin/setup.sh
 ```
 
-## Usage
+## Useful links
 
-...
+- [Postgres 8.3 SQL Commands](https://www.postgresql.org/docs/8.3/sql-commands.html)
+- [MayBMS Language Reference](http://maybms.sourceforge.net/manual/index.html#x1-450006.2)
+
