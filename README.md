@@ -20,8 +20,12 @@ This research project will provide a benchmark for comparing these databases. Th
 	
 ## Setup
 
+This project uses PyCharm as the IDE and [https://www.anaconda.com/](Anaconda) for easy package management.
+
+Import this project into PyCharm and execute the following in the PyCharm terminal:
+
 ```
-$ 
+$ bash bin/setup.sh
 ```
 
 ## Usage
