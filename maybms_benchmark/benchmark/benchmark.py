@@ -1,5 +1,6 @@
 from helpers.sql_helper import execute_query as query
 
+
 # Running on top of Postgres 8.3: https://www.postgresql.org/docs/8.3/sql-commands.html
 # Language reference for MayBMS: http://maybms.sourceforge.net/manual/index.html#x1-450006.2
 
