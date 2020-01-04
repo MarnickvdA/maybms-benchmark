@@ -13,7 +13,6 @@ def get_probabilistic_query(table_name, from_table):
 def execute_query(connection, query, fetch=False):
     # Create new cursor for this db connection.
     cur = connection.cursor()
-
     cur.execute("{}".format(query))
 
     # Retrieve the result.
