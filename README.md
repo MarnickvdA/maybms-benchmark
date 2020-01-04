@@ -28,6 +28,15 @@ Import this project into PyCharm and execute the following in the PyCharm termin
 $ bash bin/setup.sh
 ```
 
+Add the file ```config.yml``` to the root of the project and fill it with your credentials:
+```
+hostname: ''
+port: 5432
+username: ''
+password: ''
+database: ''
+```
+
 ## Useful links
 
 - [Postgres 8.3 SQL Commands](https://www.postgresql.org/docs/8.3/sql-commands.html)

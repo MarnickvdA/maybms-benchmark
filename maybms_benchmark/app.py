@@ -10,7 +10,7 @@ logger = logging.getLogger()
 
 
 def run():
-    # Initilize logging
+    # Initialize logging
     init_logging()
 
     # Initialize db
@@ -36,12 +36,15 @@ def init_logging():
 
 
 def init_db():
-    with open("../local_config.yml", 'r') as config:
+    with open("../config.yml", 'r') as config:
         cfg = yaml.load(config, Loader=yaml.FullLoader)
 
     logger.info("Connecting to {}".format(cfg['hostname']))
-    connection = psycopg2.connect(host=cfg['hostname'], port=cfg['port'], user=cfg['username'], password=cfg['password'],
-                            dbname=cfg['database'])
+    connection = psycopg2.connect(host=cfg['hostname'],
+                                  port=cfg['port'],
+                                  user=cfg['username'],
+                                  password=cfg['password'],
+                                  dbname=cfg['database'])
     logger.info("Connected!")
 
     return connection
