@@ -14,7 +14,6 @@ def execute_query(connection, query, fetch=False):
     # Create new cursor for this db connection.
     cur = connection.cursor()
 
-    # Added explain analyze for query performance data. https://statsbot.co/blog/postgresql-query-optimization/
     cur.execute("{}".format(query))
 
     # Retrieve the result.

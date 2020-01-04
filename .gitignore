@@ -89,3 +89,9 @@ modules.xml
 .idea/sonarlint
 
 # End of https://www.gitignore.io/api/pycharm+all
+
+local_config.yml
+maybms_benchmark/__pycache__/
+maybms_benchmark/benchmark/__pycache__/
+maybms_benchmark/generator/__pycache__/
+maybms_benchmark/helpers/__pycache__/

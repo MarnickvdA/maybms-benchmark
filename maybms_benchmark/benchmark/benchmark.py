@@ -6,7 +6,7 @@ from helpers.sql_helper import execute_query as query
 
 def runBenchmark(connection):
     # Dummy case
-    query(connection, "SELECT * FROM *")
+    print(query(connection, "SELECT * FROM *"))
 
     # Take a database table R with the column P, to create a probabilistic database we must use the statement 'repair key'.
     # This creates a tuple of the possible outcomes paired with the probability that the event occurs
