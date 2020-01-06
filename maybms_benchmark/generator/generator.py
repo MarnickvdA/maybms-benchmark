@@ -6,10 +6,8 @@ from random import random
 
 from helpers.sql_helper import execute_query as query
 
-processedFlag = 1
 holder = []
 seed(3)
-
 
 # Simple routine to run a query on a database and print the results:
 def doQuery(conn):
@@ -17,14 +15,14 @@ def doQuery(conn):
     print(query(conn, "SELECT * FROM k"))
 
 
-def open_output():
-    with open('processed.txt', 'w') as csvoutput:
+def write_to_output(file):
+    with open(file, 'w') as csvoutput:
         writer = csv.writer(csvoutput, lineterminator='\n')
         writer.writerows(holder)
 
 
-def show_file():
-    with open('processed.txt') as csv_file:
+def show_file(file):
+    with open(file) as csv_file:
         csv_reader = csv.reader(csv_file, delimiter=',')
         line_count = 0
         for row in csv_reader:
@@ -37,47 +35,60 @@ def show_file():
         print(f'Processed {line_count} lines.')
 
 
-def cvs_reader():
-    with open('datasets.txt', 'r') as csvinput:
+def cvs_reader(input, output):
+    with open(input, 'r') as csvinput:
         reader = csv.reader(csvinput)
         row = next(reader)
         row.append(' P')
         print(row)
+        holder.clear()
         holder.append(row)
 
         for row in reader:
-            inverse, value = probability_generator()
+            inverse, value, second_value = probability_generator()
             row_value = row.copy()
             row_inverse = row.copy()
             row_value.append(value)
             row_inverse.append(inverse)
             holder.append(row_value)
             holder.append(row_inverse)
+            if second_value is not 0:
+                row_second_value = row.copy()
+                row_second_value.append(second_value)
+                holder.append(row_second_value)
 
-        open_output()
+        write_to_output(output)
         # show_file
 
 
-def check_processed():
-    with open('processed.txt', 'r') as csvin:
+def check_processed(input, output):
+    with open(output, 'r') as csvin:
         read = csv.reader(csvin)
-        if os.stat('processed.txt').st_size == 0:
-            cvs_reader()
+        if os.stat(output).st_size == 0:
+            cvs_reader(input, output)
         else:
             check = next(read)
             if 'P' in check:
                 print('File already processed!')
             else:
-                cvs_reader()
+                cvs_reader(input, output)
 
 
 def probability_generator():
     value = random()
-    inverse = 1 - value
-    return inverse, value
+    second_value = 0
+    if value < 0.5:
+        while True:
+            second_value = random()
+            if second_value < 0.5:
+                inverse = 1 - (value + second_value)
+                break
+    else:
+        inverse = 1 - value
+    return inverse, value, second_value
 
 def run(connection):
+    print("hello")
     # Do cool generator stuff...
     # ...
-
-    check_processed()
+    check_processed('dataset', 'processed')
