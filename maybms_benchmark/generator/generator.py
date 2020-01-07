@@ -94,11 +94,10 @@ def probability_generator():
         inverse = 1 - value
     return inverse, value, second_value
 
-def run(connection):
+def generate(connection):
     print("hello")
     # Do cool generator stuff...
     # ...
 
-
-check_processed('dataset', 'processed')
-show_file('processed')
+# check_processed('dataset', 'processed')
+# show_file('processed')
