@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 import yaml
-import time
 import psycopg2
 import psycopg2.extensions
 import logging
@@ -24,22 +23,25 @@ def run():
     # Initialize db
     connection = init_db()
 
-    # Let the generator fill the database
+    logger.info("Populating probabilistic database...")
     generator.run(connection, size=500)
+    logger.info("Populating complete!")
 
     # Let the benchmark test the database
-    benchmark_results = benchmark.runBenchmark(connection)
+    benchmark_results = benchmark.runBenchmark(connection, logger)
 
     # Clear the database
     sql_helper.nuke_tables(connection)
 
     # Close the db connection.
     connection.close()
-    logger.info("Connection closed")
+    logger.info("Database connection ended.")
 
     # Save the results to a file
     date_time = datetime.now().strftime("%Y%m%d-%H%M")
     export_results(results=benchmark_results, filename="{}_maybms-benchmark-result".format(date_time))
+
+    logger.info("Bye!")
 
 
 def init_logging():

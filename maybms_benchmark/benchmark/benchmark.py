@@ -9,8 +9,8 @@ from helpers.sql_helper import create_probabilistic_table as create_ptable
 # Amount of iterations of the queries
 TEST_CYCLES = 3
 
-def runBenchmark(connection):
 
+def runBenchmark(connection, logger):
     # Create probabilistic table with name S, use as key '' from the table X and with probability column 'P'
     create_ptable(connection, new_table_name="p_table", repair_key="", from_table="m", p_column_name="P")
 
@@ -49,6 +49,7 @@ def runBenchmark(connection):
     query_5 = ""
 
     # Execute the queries that are defined above, so the database puts them in the cache
+    logger.info("Executing queries for caching functionality")
     query(connection=connection, query=query_1)
     query(connection=connection, query=query_2)
     query(connection=connection, query=query_3)
@@ -56,11 +57,22 @@ def runBenchmark(connection):
     query(connection=connection, query=query_5)
 
     # Run the benchmark with cached queries
+    logger.info("Running benchmark!")
     delta_time_query_1 = timeit.timeit(lambda: query(connection, query_1, fetch=True), number=TEST_CYCLES) / TEST_CYCLES
+    logger.info("Query 1: Complete.")
+
     delta_time_query_2 = timeit.timeit(lambda: query(connection, query_2, fetch=True), number=TEST_CYCLES) / TEST_CYCLES
+    logger.info("Query 2: Complete.")
+
     delta_time_query_3 = timeit.timeit(lambda: query(connection, query_3, fetch=True), number=TEST_CYCLES) / TEST_CYCLES
+    logger.info("Query 3: Complete.")
+
     delta_time_query_4 = timeit.timeit(lambda: query(connection, query_4, fetch=True), number=TEST_CYCLES) / TEST_CYCLES
+    logger.info("Query 4: Complete.")
+
     delta_time_query_5 = timeit.timeit(lambda: query(connection, query_5, fetch=True), number=TEST_CYCLES) / TEST_CYCLES
+    logger.info("Query 5: Complete.")
+
 
     # Saving the results in a summarized dictionary
     summary = dict([
