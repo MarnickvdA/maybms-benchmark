@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-import psycopg2
 import yaml
 import time
 import psycopg2

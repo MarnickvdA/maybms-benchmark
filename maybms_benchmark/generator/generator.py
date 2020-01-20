@@ -2,11 +2,11 @@
 import csv
 from random import seed
 from random import random
-import psycopg2
 
 from helpers.sql_helper import execute_query as query
 
 seed(3)
+
 
 # Simple routine to run a query on a database and print the results:
 def doQuery(conn):
@@ -15,6 +15,7 @@ def doQuery(conn):
     print(value)
 
 
+# drops the table from the database
 def drop_table(conn):
     query(conn, "DROP TABLE m")
 
@@ -31,6 +32,7 @@ def create_table(conn):
                 "Civil_Twilight VARCHAR(255), Nautical_Twilight VARCHAR(255), Astronomical_Twilight VARCHAR(255), Weight INT, P FLOAT);")
 
 
+# fills the table in the database
 def fill_table_rows(conn, row):
     cur = conn.cursor()
     sql = "INSERT INTO m VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
@@ -73,6 +75,7 @@ def alter_dataset(input, connection):
         print(index)
 
 
+#generates different probabilities
 def probability_generator():
     value = random()
     second_value = 0
@@ -91,8 +94,8 @@ def probability_generator():
 def run(connection):
     create_table(connection)
     alter_dataset('..\\..\\data\\dataset', connection)
-    doQuery(connection)
-    drop_table(connection)
+    #doQuery(connection)
+    #drop_table(connection)
 
 
 
