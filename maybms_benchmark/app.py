@@ -16,25 +16,6 @@ logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
 
-class MyLoggingCursor(LoggingCursor):
-    def execute(self, query, vars=None):
-        self.timestamp = time.time()
-        return super(MyLoggingCursor, self).execute(query, vars)
-
-    def callproc(self, procname, vars=None):
-        self.timestamp = time.time()
-        return super(MyLoggingCursor, self).callproc(procname, vars)
-
-
-class MyLoggingConnection(LoggingConnection):
-    def filter(self, msg, curs):
-        return msg + "   %d ms" % int((time.time() - curs.timestamp) * 1000)
-
-    def cursor(self, *args, **kwargs):
-        kwargs.setdefault('cursor_factory', MyLoggingCursor)
-        return LoggingConnection.cursor(self, *args, **kwargs)
-
-
 def run():
     """
     This function runs the totality of the benchmark. It injects the right data in the configured MayBMS database and
@@ -85,9 +66,6 @@ def init_db():
                                   password=cfg['password'],
                                   dbname=cfg['database'])
     logger.info("Connected!")
-
-    # Initialize logging
-    connection.initialize(logger)
 
     return connection
 
