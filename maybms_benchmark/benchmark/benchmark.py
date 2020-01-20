@@ -11,6 +11,8 @@ TEST_CYCLES = 3
 
 
 def runBenchmark(connection, logger):
+    logger.info("Starting the benchmark!")
+
     # Create probabilistic table with name S, use as key '' from the table X and with probability column 'P'
     create_ptable(connection, new_table_name="p_table", repair_key="", from_table="m", p_column_name="P")
 
@@ -50,11 +52,11 @@ def runBenchmark(connection, logger):
 
     # Execute the queries that are defined above, so the database puts them in the cache
     logger.info("Executing queries for caching functionality")
-    query(connection=connection, query=query_1)
-    query(connection=connection, query=query_2)
-    query(connection=connection, query=query_3)
-    query(connection=connection, query=query_4)
-    query(connection=connection, query=query_5)
+    query(connection=connection, query=query_1, fetch=True)
+    query(connection=connection, query=query_2, fetch=True)
+    query(connection=connection, query=query_3, fetch=True)
+    query(connection=connection, query=query_4, fetch=True)
+    query(connection=connection, query=query_5, fetch=True)
 
     # Run the benchmark with cached queries
     logger.info("Running benchmark!")

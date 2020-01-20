@@ -55,27 +55,25 @@ def alter_dataset(input, connection, size):
         for row in reader:
             if index >= size:
                 return
+            if len(row) == 50:
+                index += 1
+                inverse, value, second_value = probability_generator()
+                row_value = row.copy()
+                row_inverse = row.copy()
 
-            index += 1
-            inverse, value, second_value = probability_generator()
-            row_value = row.copy()
-            row_inverse = row.copy()
+                row_value.append('1')
+                row_value.append(value)
+                fill_table_rows(connection, row_value)
 
-            row_value.append('1')
-            row_value.append(value)
-            fill_table_rows(connection, row_value)
+                row_inverse.append('2')
+                row_inverse.append(inverse)
+                fill_table_rows(connection, row_inverse)
 
-            row_inverse.append('2')
-            row_inverse.append(inverse)
-            fill_table_rows(connection, row_inverse)
-
-            if second_value is not 0:
-                row_second_value = row.copy()
-                row_second_value.append('3')
-                row_second_value.append(second_value)
-                fill_table_rows(connection, row_second_value)
-
-        print(index)
+                if second_value is not 0:
+                    row_second_value = row.copy()
+                    row_second_value.append('3')
+                    row_second_value.append(second_value)
+                    fill_table_rows(connection, row_second_value)
 
 
 def probability_generator():
