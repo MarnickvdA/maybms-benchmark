@@ -39,7 +39,7 @@ def run():
 
     # Save the results to a file
     date_time = datetime.now().strftime("%Y%m%d-%H%M")
-    export_results(results=benchmark_results, filename="{}_maybms-benchmark-result".format(date_time))
+    export_results(results=benchmark_results, filename="{}_maybms-benchmark-result.csv".format(date_time))
 
     logger.info("Bye!")
 
