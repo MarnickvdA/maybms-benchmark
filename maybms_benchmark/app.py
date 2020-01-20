@@ -6,17 +6,17 @@ import psycopg2
 import psycopg2.extensions
 from psycopg2.extras import LoggingConnection, LoggingCursor
 import logging
+import pandas as pd
+from datetime import datetime
 
 from generator import generator
 from benchmark import benchmark
 from helpers import sql_helper
 
-
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
 
-# MyLoggingCursor simply sets self.timestamp at start of each query
 class MyLoggingCursor(LoggingCursor):
     def execute(self, query, vars=None):
         self.timestamp = time.time()
@@ -27,9 +27,6 @@ class MyLoggingCursor(LoggingCursor):
         return super(MyLoggingCursor, self).callproc(procname, vars)
 
 
-# MyLogging Connection:
-#   a) calls MyLoggingCursor rather than the default
-#   b) adds resulting execution (+ transport) time via filter()
 class MyLoggingConnection(LoggingConnection):
     def filter(self, msg, curs):
         return msg + "   %d ms" % int((time.time() - curs.timestamp) * 1000)
@@ -45,9 +42,6 @@ def run():
     executes queries to capture the performance of the MayBMS system. Finally, it will generate a file with the results
     of the benchmark.
     """
-    # Initialize logging
-    init_logging()
-
     # Initialize db
     connection = init_db()
 
@@ -55,7 +49,7 @@ def run():
     # generator.run(db_connection)
 
     # Let the benchmark test the database
-    # results = benchmark.runBenchmark(db_connection)
+    # benchmark_results = benchmark.runBenchmark(db_connection)
 
     # Clear the database
     # sql_helper.nuke_tables(connection)
@@ -65,7 +59,8 @@ def run():
     logger.info("Connection closed")
 
     # Save the results to a file
-    # TODO
+    # date_time = datetime.now().strftime("%Y%m%d-%H%M")
+    # export_results(results=benchmark_results, filename="{}_maybms-benchmark-result".format(date_time))
 
 
 def init_logging():
@@ -92,4 +87,13 @@ def init_db():
                                   dbname=cfg['database'])
     logger.info("Connected!")
 
+    # Initialize logging
+    connection.initialize(logger)
+
     return connection
+
+
+def export_results(results, filename):
+    df = pd.DataFrame.from_dict(results, orient='index', columns=['execution_time'])
+    df.to_csv(filename)
+    logger.info("Results exported to {}".format(filename))
