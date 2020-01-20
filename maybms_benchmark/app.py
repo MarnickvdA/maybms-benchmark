@@ -6,9 +6,9 @@ import logging
 import pandas as pd
 from datetime import datetime
 
-from generator import generator
-from benchmark import benchmark
-from helpers import sql_helper
+from maybms_benchmark.generator import generator
+from maybms_benchmark.benchmark import benchmark
+from maybms_benchmark.helpers import sql_helper
 
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
@@ -23,9 +23,8 @@ def run():
     # Initialize db
     connection = init_db()
 
-    # Let the generator fill the database
     logger.info("Populating probabilistic database...")
-    generator.run(connection, size=50000)
+    generator.run(connection, size=500)
     logger.info("Populating complete!")
 
     # Let the benchmark test the database

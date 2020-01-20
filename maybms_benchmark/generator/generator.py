@@ -2,6 +2,7 @@
 import csv
 from random import seed
 from random import random
+import os
 
 from helpers.sql_helper import execute_query as query
 
@@ -97,7 +98,9 @@ def probability_generator():
 # Generates data and fills database
 def run(connection, size):
     create_table(connection)
-    alter_dataset('..\\..\\data\\dataset', connection, size)
+    root_dir = os.path.dirname(os.path.abspath('data'))
+    file_path = os.path.join(root_dir, 'dataset')  # requires `import os`
+    alter_dataset(file_path, connection, size)
 
 
 

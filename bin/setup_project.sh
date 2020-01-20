@@ -8,3 +8,4 @@ echo Installing additional libraries...
 conda install -c anaconda psycopg2
 conda install -c anaconda yaml
 conda install -c anaconda pandas
+4
