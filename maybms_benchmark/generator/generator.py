@@ -16,8 +16,7 @@ def doQuery(conn):
 
 # creates table in database
 def create_table(conn):
-    cur = conn.cursor()
-    cur.execute("CREATE TABLE m ( ID VARCHAR(255), Source VARCHAR(255), TMC VARCHAR(255), Severity VARCHAR(255), Start_time VARCHAR(255), End_Time VARCHAR(255),"
+    query(conn, "CREATE TABLE m ( ID VARCHAR(255), Source VARCHAR(255), TMC VARCHAR(255), Severity VARCHAR(255), Start_time VARCHAR(255), End_Time VARCHAR(255),"
                 " Start_Lat VARCHAR(255), Start_Lng VARCHAR(255), End_Lat VARCHAR(255), End_lng VARCHAR(255), Distance VARCHAR(255), Description VARCHAR(255),"
                 "Number VARCHAR(255), Street VARCHAR(255), Side VARCHAR(255), City VARCHAR(255), County VARCHAR(255), State VARCHAR(255), Zipcode VARCHAR(255), Country VARCHAR(255),"
                 "Timezone VARCHAR(255), Airport_code VARCHAR(255), Weather_Timestamp VARCHAR(255), Temperature VARCHAR(255), Wind_Chill VARCHAR(255), Humidity VARCHAR(255),"
@@ -25,7 +24,6 @@ def create_table(conn):
                 "Amenity VARCHAR(255), Bump VARCHAR(255), Crossing VARCHAR(255), Give_Way VARCHAR(255), Junction VARCHAR(255), No_Exit VARCHAR(255), Railway VARCHAR(255), Roundabout VARCHAR(255),"
                 "Station VARCHAR(255), Stop VARCHAR(255), Traffic_Calming VARCHAR(255), Traffic_Signal VARCHAR(255), Turning_loop VARCHAR(255), Sunrise_Sunset VARCHAR(255),"
                 "Civil_Twilight VARCHAR(255), Nautical_Twilight VARCHAR(255), Astronomical_Twilight VARCHAR(255), Weight INT, P FLOAT);")
-    print(">> table created")
 
 
 # Fills database
