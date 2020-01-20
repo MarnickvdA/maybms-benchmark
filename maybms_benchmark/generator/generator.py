@@ -23,7 +23,8 @@ def drop_table(conn):
 
 # creates table in database
 def create_table(conn):
-    query(conn, "CREATE TABLE m ( ID VARCHAR(255), Source VARCHAR(255), TMC VARCHAR(255), Severity VARCHAR(255), Start_time VARCHAR(255), End_Time VARCHAR(255),"
+    cur = conn.cursor()
+    cur.execute("CREATE TABLE m ( ID VARCHAR(255), Source VARCHAR(255), TMC VARCHAR(255), Severity VARCHAR(255), Start_time DATE, End_Time DATE,"
                 " Start_Lat VARCHAR(255), Start_Lng VARCHAR(255), End_Lat VARCHAR(255), End_lng VARCHAR(255), Distance VARCHAR(255), Description VARCHAR(255),"
                 "Number VARCHAR(255), Street VARCHAR(255), Side VARCHAR(255), City VARCHAR(255), County VARCHAR(255), State VARCHAR(255), Zipcode VARCHAR(255), Country VARCHAR(255),"
                 "Timezone VARCHAR(255), Airport_code VARCHAR(255), Weather_Timestamp VARCHAR(255), Temperature VARCHAR(255), Wind_Chill VARCHAR(255), Humidity VARCHAR(255),"
@@ -31,14 +32,13 @@ def create_table(conn):
                 "Amenity VARCHAR(255), Bump VARCHAR(255), Crossing VARCHAR(255), Give_Way VARCHAR(255), Junction VARCHAR(255), No_Exit VARCHAR(255), Railway VARCHAR(255), Roundabout VARCHAR(255),"
                 "Station VARCHAR(255), Stop VARCHAR(255), Traffic_Calming VARCHAR(255), Traffic_Signal VARCHAR(255), Turning_loop VARCHAR(255), Sunrise_Sunset VARCHAR(255),"
                 "Civil_Twilight VARCHAR(255), Nautical_Twilight VARCHAR(255), Astronomical_Twilight VARCHAR(255), Weight INT, P FLOAT);")
-
+    conn.commit()
 
 # fills the table in the database
 def fill_table_rows(conn, row):
     cur = conn.cursor()
     sql = "INSERT INTO m VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
     val = (row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8], row[9], row[10], row[11], row[12], row[13], row[14], row[15], row[16], row[17], row[18], row[19], row[20], row[21], row[22], row[23], row[24], row[25], row[26], row[27], row[28], row[29], row[30], row[31], row[32],row[33], row[34], row[35], row[36], row[37], row[38], row[39], row[40], row[41], row[42], row[43], row[44], row[45], row[46], row[47], row[48], row[49], row[50])
-    print(val)
     cur.execute(sql, val)
     conn.commit()
 
@@ -50,11 +50,10 @@ def alter_dataset(input, connection, size):
         row = next(reader)
         row.append('Weight')
         row.append('P')
-        print(row)
         index = 0
 
         for row in reader:
-            if index >= size:
+            if index > size:
                 return
 
             index += 1
@@ -100,9 +99,7 @@ def probability_generator():
 # Generates data and fills database
 def run(connection, size):
     create_table(connection)
-    root_dir = os.path.dirname(os.path.abspath('data'))
-    file_path = os.path.join(root_dir, 'dataset')  # requires `import os`
-    alter_dataset(file_path, connection, size)
+    alter_dataset('..\\data\\dataset', connection, size)
 
 
 

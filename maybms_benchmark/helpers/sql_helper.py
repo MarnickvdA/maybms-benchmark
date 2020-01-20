@@ -1,5 +1,5 @@
 def drop_table(connection, table_name):
-    execute_query(connection, "DROP TABLE {} CASCADE".format(table_name))
+    execute_query(connection, "DROP TABLE IF EXISTS {} CASCADE".format(table_name))
 
 
 def create_probabilistic_table(connection, new_table_name, repair_key, from_table, p_column_name):

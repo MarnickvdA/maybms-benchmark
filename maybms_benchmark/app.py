@@ -22,9 +22,10 @@ def run():
     """
     # Initialize db
     connection = init_db()
+    sql_helper.nuke_tables(connection)
 
     logger.info("Populating probabilistic database...")
-    generator.run(connection, size=500)
+    generator.run(connection, size=800)
     logger.info("Populating complete!")
 
     # Let the benchmark test the database
