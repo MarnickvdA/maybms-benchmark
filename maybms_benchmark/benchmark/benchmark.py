@@ -11,6 +11,8 @@ TEST_CYCLES = 3
 
 
 def runBenchmark(connection, logger):
+    logger.info("Starting the benchmark!")
+
     # Create probabilistic table with name S, use as key '' from the table X and with probability column 'P'
     create_ptable(connection, new_table_name="p_table", repair_key="ID", from_table="m", p_column_name="P")
 
