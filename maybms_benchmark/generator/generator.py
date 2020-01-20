@@ -55,7 +55,7 @@ def alter_dataset(input, connection, size):
         for row in reader:
             if index > size:
                 return
-            if len(row) == 50:
+            if len(row) == 49:
                 index += 1
                 inverse, value, second_value = probability_generator()
                 row_value = row.copy()
