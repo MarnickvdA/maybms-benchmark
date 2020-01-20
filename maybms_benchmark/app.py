@@ -3,14 +3,13 @@ import yaml
 import time
 import psycopg2
 import psycopg2.extensions
-from psycopg2.extras import LoggingConnection, LoggingCursor
 import logging
 import pandas as pd
 from datetime import datetime
 
-from generator import generator
-from benchmark import benchmark
-from helpers import sql_helper
+from maybms_benchmark.generator import generator
+from maybms_benchmark.benchmark import benchmark
+from maybms_benchmark.helpers import sql_helper
 
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
@@ -26,7 +25,7 @@ def run():
     connection = init_db()
 
     # Let the generator fill the database
-    generator.run(connection, size=50000)
+    generator.run(connection, size=500)
 
     # Let the benchmark test the database
     benchmark_results = benchmark.runBenchmark(connection)
