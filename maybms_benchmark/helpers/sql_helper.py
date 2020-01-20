@@ -2,10 +2,10 @@ def drop_table(connection, table_name):
     execute_query(connection, "DROP TABLE {} CASCADE".format(table_name))
 
 
-def create_probabilistic_table(connection, new_table_name, repair_key, from_table, P_column_name):
+def create_probabilistic_table(connection, new_table_name, repair_key, from_table, p_column_name):
     execute_query(connection,
                   "create table {} as repair key {} in {} weight by {};".format(new_table_name, repair_key, from_table,
-                                                                                P_column_name))
+                                                                                p_column_name))
 
 
 def get_probabilistic_query(table_name, from_table):
@@ -13,8 +13,8 @@ def get_probabilistic_query(table_name, from_table):
 
 
 def nuke_tables(connection):
-    execute_query(connection, "DROP SCHEMA public CASCADE;")
-    execute_query(connection, "CREATE SCHEMA public;")
+    drop_table(connection, "m")
+    drop_table(connection, "p_table")
 
 
 def execute_query(connection, query, fetch=False):

@@ -43,7 +43,7 @@ def fill_table_rows(conn, row):
 
 
 # alters the input file
-def alter_dataset(input, connection):
+def alter_dataset(input, connection, size):
     with open(input, 'r') as csvinput:
         reader = csv.reader(csvinput)
         row = next(reader)
@@ -53,6 +53,9 @@ def alter_dataset(input, connection):
         index = 0
 
         for row in reader:
+            if index >= size:
+                return
+
             index += 1
             inverse, value, second_value = probability_generator()
             row_value = row.copy()
@@ -75,8 +78,11 @@ def alter_dataset(input, connection):
         print(index)
 
 
-#generates different probabilities
 def probability_generator():
+    """
+    Generate probabilities for the rows in the dataset.
+    :return: probability values
+    """
     value = random()
     second_value = 0
     if value < 0.5:
@@ -91,11 +97,9 @@ def probability_generator():
 
 
 # Generates data and fills database
-def run(connection):
+def run(connection, size):
     create_table(connection)
-    alter_dataset('..\\..\\data\\dataset', connection)
-    #doQuery(connection)
-    #drop_table(connection)
+    alter_dataset('..\\..\\data\\dataset', connection, size)
 
 
 

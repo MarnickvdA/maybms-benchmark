@@ -12,7 +12,7 @@ TEST_CYCLES = 3
 def runBenchmark(connection):
 
     # Create probabilistic table with name S, use as key '' from the table X and with probability column 'P'
-    create_ptable(connection, new_table_name="S", repair_key="", from_table="X",P_column_name="P")
+    create_ptable(connection, new_table_name="p_table", repair_key="", from_table="m", p_column_name="P")
 
     # Case 1: where
     query_1 = "SELECT " \

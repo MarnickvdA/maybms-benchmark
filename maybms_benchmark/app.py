@@ -45,21 +45,21 @@ def run():
     connection = init_db()
 
     # Let the generator fill the database
-    # generator.run(db_connection)
+    generator.run(connection, size=50000)
 
     # Let the benchmark test the database
-    # benchmark_results = benchmark.runBenchmark(db_connection)
+    benchmark_results = benchmark.runBenchmark(connection)
 
     # Clear the database
-    # sql_helper.nuke_tables(connection)
+    sql_helper.nuke_tables(connection)
 
     # Close the db connection.
     connection.close()
     logger.info("Connection closed")
 
     # Save the results to a file
-    # date_time = datetime.now().strftime("%Y%m%d-%H%M")
-    # export_results(results=benchmark_results, filename="{}_maybms-benchmark-result".format(date_time))
+    date_time = datetime.now().strftime("%Y%m%d-%H%M")
+    export_results(results=benchmark_results, filename="{}_maybms-benchmark-result".format(date_time))
 
 
 def init_logging():
