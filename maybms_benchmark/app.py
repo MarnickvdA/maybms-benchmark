@@ -25,8 +25,7 @@ def run():
     sql_helper.nuke_tables(connection)
 
     logger.info("Populating probabilistic database...")
-    amount_of_elements = 800
-    generator.run(connection, size=amount_of_elements)
+    generator.run(connection, size=1000000)
     logger.info("Populating complete!")
 
     # Let the benchmark test the database

@@ -34,6 +34,7 @@ def create_table(conn):
                 "Civil_Twilight VARCHAR(255), Nautical_Twilight VARCHAR(255), Astronomical_Twilight VARCHAR(255), Weight INT, P FLOAT);")
     conn.commit()
 
+
 # fills the table in the database
 def fill_table_rows(conn, row):
     cur = conn.cursor()
@@ -56,7 +57,6 @@ def alter_dataset(input, connection, size):
             if index > size:
                 return
             if len(row) == 49:
-                index += 1
                 inverse, value, second_value = probability_generator()
                 row_value = row.copy()
                 row_inverse = row.copy()
@@ -64,16 +64,19 @@ def alter_dataset(input, connection, size):
                 row_value.append('1')
                 row_value.append(value)
                 fill_table_rows(connection, row_value)
+                index += 1
 
                 row_inverse.append('2')
                 row_inverse.append(inverse)
                 fill_table_rows(connection, row_inverse)
+                index += 1
 
                 if second_value is not 0:
                     row_second_value = row.copy()
                     row_second_value.append('3')
                     row_second_value.append(second_value)
                     fill_table_rows(connection, row_second_value)
+                    index += 1
 
 
 def probability_generator():

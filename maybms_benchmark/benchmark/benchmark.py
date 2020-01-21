@@ -27,15 +27,15 @@ def runBenchmark(connection, logger):
     query_2 = "SELECT " \
               "ID, Start_Time, End_Time, tconf() " \
               "FROM p_table " \
-              "WHERE End_time < date '2012/12/12 00:00:00' " \
-              "AND Start_Time > date '2010/10/10 00:00:00';"
+              "WHERE End_time < date '2018/12/12 00:00:00' " \
+              "AND Start_Time > date '2017/10/10 00:00:00';"
 
     # Case 3: where and group by
     query_3 = "SELECT " \
               "conf() " \
               "FROM p_table " \
-              "WHERE Start_Time <= date '1998-09-01 00:00:00' " \
-              "AND Temperature >= '40'" \
+              "WHERE Start_Time <= date '2017-11-01 00:00:00' " \
+              "AND Temperature <= '40'" \
               "GROUP BY city;"
 
     # case 4: advanced where and group by
@@ -50,16 +50,16 @@ def runBenchmark(connection, logger):
               "GROUP BY ID, City, Severity, prob;"
 
     # case 5: Joins ?
-    #query_5 = ""
+    query_5 = "SELECT * FROM p_table"
 
     # Execute the queries that are defined above, so the database puts them in the cache
     logger.info("Executing queries for caching functionality")
 
-    query(connection=connection, query=query_1)
-    query(connection=connection, query=query_2)
-    query(connection=connection, query=query_3)
-    query(connection=connection, query=query_4)
-    #query(connection=connection, query=query_5)
+    query(connection=connection, query=query_1, fetch=True)
+    query(connection=connection, query=query_2, fetch=True)
+    query(connection=connection, query=query_3, fetch=True)
+    query(connection=connection, query=query_4, fetch=True)
+    query(connection=connection, query=query_5)
 
     # Run the benchmark with cached queries
     logger.info("Running benchmark!")
@@ -75,8 +75,8 @@ def runBenchmark(connection, logger):
     delta_time_query_4 = timeit.timeit(lambda: query(connection, query_4, fetch=True), number=TEST_CYCLES) / TEST_CYCLES
     logger.info("Query 4: Complete.")
 
-    #delta_time_query_5 = timeit.timeit(lambda: query(connection, query_5, fetch=True), number=TEST_CYCLES) / TEST_CYCLES
-    #logger.info("Query 5: Complete.")
+    delta_time_query_5 = timeit.timeit(lambda: query(connection, query_5), number=TEST_CYCLES) / TEST_CYCLES
+    logger.info("Query 5: Complete.")
 
 
     # Saving the results in a summarized dictionary
@@ -85,7 +85,7 @@ def runBenchmark(connection, logger):
         ('Query 2', [delta_time_query_2]),
         ('Query 3', [delta_time_query_3]),
         ('Query 4', [delta_time_query_4]),
-        #('Query 5', [delta_time_query_5]),
+        ('Query 5', [delta_time_query_5]),
     ])
 
     # Return the query execution results
