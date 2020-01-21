@@ -27,14 +27,14 @@ def runBenchmark(connection, logger):
     query_2 = "SELECT " \
               "ID, Start_Time, End_Time, tconf() " \
               "FROM p_table " \
-              "WHERE End_time < date '2018/12/12 00:00:00' " \
-              "AND Start_Time > date '2017/10/10 00:00:00';"
+              "WHERE End_time < date '2018-07-20 00:00:00' " \
+              "AND Start_Time > date '2016-03-09 00:00:00';"
 
     # Case 3: where and group by
     query_3 = "SELECT " \
               "conf() " \
               "FROM p_table " \
-              "WHERE Start_Time <= date '2017-11-01 00:00:00' " \
+              "WHERE Start_Time <= date '2017-04-20 00:00:00' " \
               "AND Temperature <= '40'" \
               "GROUP BY city;"
 
@@ -42,8 +42,8 @@ def runBenchmark(connection, logger):
     query_4 = "SELECT " \
               "City, ID, Severity, tconf() as prob " \
               "FROM p_table " \
-              "WHERE Start_Time >= date '2016-02-01 00:00:00' " \
-              "AND End_Time <= date '2016-03-01 : 00:00:00' " \
+              "WHERE Start_Time >= date '2016-04-09 00:00:00' " \
+              "AND End_Time <= date '2018-05-12 : 00:00:00' " \
               "AND Astronomical_Twilight = 'Night' " \
               "AND Source = 'MapQuest' " \
               "AND Severity = '2' " \
