@@ -25,7 +25,8 @@ def run():
     sql_helper.nuke_tables(connection)
 
     logger.info("Populating probabilistic database...")
-    generator.run(connection, size=800)
+    amount_of_elements = 800
+    generator.run(connection, size=amount_of_elements)
     logger.info("Populating complete!")
 
     # Let the benchmark test the database
@@ -40,7 +41,7 @@ def run():
 
     # Save the results to a file
     date_time = datetime.now().strftime("%Y%m%d-%H%M")
-    export_results(results=benchmark_results, filename="{}_maybms-benchmark-result.csv".format(date_time))
+    export_results(results=benchmark_results, filename="{}_{}-elements_maybms-benchmark-result.csv".format(date_time, amount_of_elements))
 
     logger.info("Bye!")
 
