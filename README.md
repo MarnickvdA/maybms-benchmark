@@ -15,9 +15,7 @@ This research project will provide a benchmark for comparing these databases. Th
     │   ├── generator           # Data generator files
     │   │   └── ...             # All files that are needed for the data generator
     │   └── __main__.py         # Main executable project file
-    │   └── app.py              # Core project script
-    └── setup.py		# Initializes this project's package
-	
+    │   └── app.py              # Core project script	
 ## Setup
 
 This project uses PyCharm as the IDE and [Anaconda](https://www.anaconda.com/) for easy package management.
@@ -36,6 +34,12 @@ username: ''
 password: ''
 database: ''
 ```
+
+## Dataset
+
+Running this benchmark requires a dataset which we got from Kaggle. Place this dataset in the `/data` folder.
+ 
+[US Traffic Accidents dataset](https://www.kaggle.com/sobhanmoosavi/us-accidents/data)
 
 ## Useful links
 
