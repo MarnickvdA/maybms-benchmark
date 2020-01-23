@@ -49,10 +49,42 @@ def runBenchmark(connection, logger):
               "AND Severity = '2' " \
               "GROUP BY ID, City, Severity, prob;"
 
-    # case 5: Joins ?
-    query_5 = "SELECT * FROM p_table"
+    # case 5: simple where self join
+    query_5 = "SELECT A.ID as ID1, B.ID as ID2, A.City " \
+              "FROM P_table A, P_table B " \
+              "WHERE A.ID <> B.ID " \
+              "AND A.City = B.city " \
+              "AND A.Start_Time <= date '2017-01-01 00:00:00' " \
+              "AND B.End_Time <= date '2017-01-01 00:00:00' " \
+              "ORDER BY A.City;"
 
-    # Execute the queries that are defined above, so the database puts them in the cache
+    # case 6: simple union
+    query_6 = "SELECT ID, City, Street " \
+              "FROM P_table " \
+              "WHERE Start_Time <= date '2017-01-01 00:00:00' " \
+              "UNION ALL " \
+              "SELECT ID, City, Temperature " \
+              "FROM P_table " \
+              "WHERE Temperature <= '25.0' " \
+              "ORDER BY City;" \
+
+    # case 7: advanced union
+    query_7 = "SELECT City, ID, Severity " \
+              "FROM P_table " \
+              "WHERE Start_Time <= date '2017-01-01 00:00:00'  " \
+              "AND Astronomical_Twilight = 'Night' " \
+              "AND Source = 'MapQuest' " \
+              "AND Severity = '2' " \
+              "UNION ALL " \
+              "SELECT City, ID, Weather_condition " \
+              "FROM P_table " \
+              "WHERE End_Time >= date '2018-01-01 00:00:00'  " \
+              "AND Astronomical_Twilight = 'Day' " \
+              "AND Weather_Condition = 'Rain' " \
+              "AND Severity = '3' " \
+              "ORDER BY City;" \
+
+        # Execute the queries that are defined above, so the database puts them in the cache
     logger.info("Executing queries for caching functionality")
 
     query(connection=connection, query=query_1, fetch=True)
@@ -60,6 +92,8 @@ def runBenchmark(connection, logger):
     query(connection=connection, query=query_3, fetch=True)
     query(connection=connection, query=query_4, fetch=True)
     query(connection=connection, query=query_5)
+    query(connection=connection, query=query_6)
+    query(connection=connection, query=query_7)
 
     # Run the benchmark with cached queries
     logger.info("Running benchmark!")
@@ -76,7 +110,13 @@ def runBenchmark(connection, logger):
     logger.info("Query 4: Complete.")
 
     delta_time_query_5 = timeit.timeit(lambda: query(connection, query_5), number=TEST_CYCLES) / TEST_CYCLES
-    logger.info("Query 5: Complete.")
+    logger.info("Query 6: Complete.")
+
+    delta_time_query_6 = timeit.timeit(lambda: query(connection, query_6), number=TEST_CYCLES) / TEST_CYCLES
+    logger.info("Query 7: Complete.")
+
+    delta_time_query_7 = timeit.timeit(lambda: query(connection, query_7), number=TEST_CYCLES) / TEST_CYCLES
+    logger.info("Query 7: Complete.")
 
 
     # Saving the results in a summarized dictionary
@@ -86,6 +126,8 @@ def runBenchmark(connection, logger):
         ('Query 3', [delta_time_query_3]),
         ('Query 4', [delta_time_query_4]),
         ('Query 5', [delta_time_query_5]),
+        ('Query 6', [delta_time_query_6]),
+        ('Query 7', [delta_time_query_7]),
     ])
 
     # Return the query execution results
