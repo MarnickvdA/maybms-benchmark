@@ -3,7 +3,7 @@ import csv
 from random import seed
 from random import random
 import os
-
+from helpers.fs_helper import get_project_root as project_root
 from helpers.sql_helper import execute_query as query
 
 seed(3)
@@ -100,7 +100,7 @@ def probability_generator():
 # Generates data and fills database
 def run(connection, size):
     create_table(connection)
-    alter_dataset('..\\data\\dataset', connection, size)
+    alter_dataset(os.path.join(project_root(), 'data', 'dataset.csv'), connection, size)
 
 
 

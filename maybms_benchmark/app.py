@@ -5,10 +5,12 @@ import psycopg2.extensions
 import logging
 import pandas as pd
 from datetime import datetime
+import os
 
 from maybms_benchmark.generator import generator
 from maybms_benchmark.benchmark import benchmark
 from maybms_benchmark.helpers import sql_helper
+from maybms_benchmark.helpers.fs_helper import get_project_root as project_root
 
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
@@ -25,14 +27,17 @@ def run():
     sql_helper.nuke_tables(connection)
 
     logger.info("Populating probabilistic database...")
-    generator.run(connection, size=1000000)
+    number_of_elements = 10000
+    generator.run(connection, size=number_of_elements)
     logger.info("Populating complete!")
 
     # Let the benchmark test the database
     benchmark_results = benchmark.runBenchmark(connection, logger)
 
     # Clear the database
+    logger.info("Clearing the database...")
     sql_helper.nuke_tables(connection)
+    logger.info("Clear complete")
 
     # Close the db connection.
     connection.close()
@@ -40,7 +45,7 @@ def run():
 
     # Save the results to a file
     date_time = datetime.now().strftime("%Y%m%d-%H%M")
-    export_results(results=benchmark_results, filename="{}_{}-elements_maybms-benchmark-result.csv".format(date_time, amount_of_elements))
+    export_results(results=benchmark_results, filename="{}_{}-elements_maybms-benchmark-result.csv".format(date_time, number_of_elements))
 
     logger.info("Bye!")
 
@@ -74,5 +79,6 @@ def init_db():
 
 def export_results(results, filename):
     df = pd.DataFrame.from_dict(results, orient='index', columns=['execution_time'])
+    filename = os.path.join(project_root(), "results", filename)
     df.to_csv(filename)
     logger.info("Results exported to {}".format(filename))

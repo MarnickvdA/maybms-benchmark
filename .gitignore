@@ -95,5 +95,5 @@ maybms_benchmark/__pycache__/
 maybms_benchmark/benchmark/__pycache__/
 maybms_benchmark/generator/__pycache__/
 maybms_benchmark/helpers/__pycache__/
-maybms_benchmark/*.csv
-data/*
+results/*.csv
+data/*.csv
