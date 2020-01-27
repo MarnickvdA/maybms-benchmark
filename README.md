@@ -1,9 +1,9 @@
-# maybms-benchmark
+# Benchmarking MayBMS based on hardware specifications and query complexity
 
-## Introduction
-Predicting if a patient has a certain disease could be of great value. This prediction would be based on historical data of patients with likewise symptoms for a disease. If this data is entered into a database, many rows and columns will be produced. Rows can either be completely filled, partially filled or empty. These partially filled rows contain so-called missing values. It is possible to just disregard these missing values, but this could lead to a bias in the dataset. It would be better to predict what these values should have been. Through comparing the symptoms of different patients, it is possible to calculate the probability of our patient having disease A or disease B. This creates a so-called probabilistic database. These probabilistic databases could be of great value to minimize the amount of missing values. 
+## Abstract
+This research proposes a new kind of database that can store uncertain information: a probabilistic database. To this day, no standardized benchmark is available to assess the performance of a probabilistic database. This paper examines a benchmark for the probabilistic database ‘MayBMS’. The benchmark assesses the execution time of probabilistic queries based on the database size. An experiment is run on two hardware platforms to assess the validity of the benchmark. The benchmark creates probabilistic data and runs the benchmark queries. From the results is concluded that the number of matches for a query and the type of hardware the benchmark is executed with are of equal importance. Even though the instance with the worse hardware took considerably longer to execute, the ratio between the execution time of the queries stayed the same as on the better hardware. Thus, proving the validity of the benchmark.
 
-This research project will provide a benchmark for comparing these databases. The benchmark will include a scalable data generator capable of producing probabilistic datasets. This research will solely focus on MayBMS. Other probabilistic databases are out of the scope of this project.
+[Read the paper](Paper_MayBMS_Benchmark.pdf)
 
 ## Project structure
     .
