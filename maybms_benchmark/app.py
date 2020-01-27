@@ -27,7 +27,7 @@ def run():
     sql_helper.nuke_tables(connection)
 
     logger.info("Populating probabilistic database...")
-    number_of_elements = 10000
+    number_of_elements = 1000000
     generator.run(connection, size=number_of_elements)
     logger.info("Populating complete!")
 
@@ -78,6 +78,12 @@ def init_db():
 
 
 def export_results(results, filename):
+    """
+    Exports results of the benchmark to the `$root/results` folder
+    :param results: Results of the benchmark
+    :param filename: name of the csv file to save
+    :return:
+    """
     df = pd.DataFrame.from_dict(results, orient='index', columns=['execution_time'])
     filename = os.path.join(project_root(), "results", filename)
     df.to_csv(filename)
